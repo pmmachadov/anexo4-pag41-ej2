@@ -37,9 +37,10 @@ publicados deben ser visibles -->
     <?php
     // require con varios archivos
     require_once("funlib.php");
-?>
+    require_once("logout.php");
+    ?>
 
- 
+
 
 
 
@@ -89,7 +90,7 @@ publicados deben ser visibles -->
         </fieldset>
     </form>
 
-    // Area para ver mensajes 
+    // Area para ver mensajes
 
     <div class="container">
         <div class="row">

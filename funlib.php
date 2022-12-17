@@ -20,12 +20,41 @@ PSEUDO CODIGO --
     - registrarse. -->
 
 <?php
-// Funcion de publicar mensaje
+
+// Funcion de login. Una vez que me logueo, me dirige a la pagina.php
+
+function login($usuario, $contrasena)
+{
+    $psw = fopen("psw.dat", "r");
+    $psw = fread($psw, filesize("psw.dat"));
+    $psw = explode(" ", $psw);
+    if (in_array($usuario, $psw) && in_array($contrasena, $psw)) {
+        $_SESSION["usuario"] = $usuario;
+        header("Location: pagina.php");
+    } else {
+        echo "Usuario o contraseña incorrectos";
+    }
+}
+
+
+// Funcion de registro. Cuando un usuario se registra, se añade su nombre de usuario y contraseña al archivo psw.dat. Una vez que se registra, se le redirige a la pagina.php
+
+function registro($usuario, $contrasena)
+{
+    $psw = fopen("psw.dat", "a");
+    fwrite($psw, $usuario . " " . $contrasena . " ");
+    fclose($psw);
+    $_SESSION["usuario"] = $usuario;
+    header("Location: pagina.php");
+}
+
+
+// Funcion de publicar mensaje. Se debe registrar fecha, hora y usuario que publica el mensaje.
 
 function publicar($mensaje)
 {
     $foro = fopen("foro.dat", "a");
-    fwrite($foro, $mensaje . " ");
+    fwrite($foro, $mensaje . " " . date("d/m/Y") . " " . date("H:i:s") . " " . $_SESSION["usuario"] . " ");
     fclose($foro);
 }
 
